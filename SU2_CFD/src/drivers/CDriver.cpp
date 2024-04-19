@@ -751,6 +751,17 @@ void CDriver::InitializeGeometryFVM(CConfig *config, CGeometry **&geometry) {
   if (rank == MASTER_NODE) cout << "Recomputing point connectivity." << endl;
   geometry[MESH_0]->SetPoint_Connectivity();
 
+  // std::ofstream f;
+  // f.open("adjacency.txt");
+  // f << geometry[MESH_0]->GetnPointDomain() << "  " << geometry[MESH_0]->GetnPointDomain() << '\n';
+  // for (auto iPoint = 0ul; iPoint < geometry[MESH_0]->GetnPointDomain(); iPoint++) {
+  //   for (const auto jPoint : geometry[MESH_0]->nodes->GetPoints(iPoint)) {
+  //     if (jPoint < geometry[MESH_0]->GetnPointDomain()) {
+  //       f << iPoint << "  " << jPoint << '\n';
+  //     }
+  //   }
+  // }
+
   /*--- Compute elements surrounding elements ---*/
 
   if (rank == MASTER_NODE) cout << "Setting element connectivity." << endl;
@@ -2511,7 +2522,7 @@ void CDriver::InitializeInterface(CConfig **config, CSolver***** solver, CGeomet
 
           const auto fluidZone = heat_target? donor : target;
 
-          if (config[fluidZone]->GetEnergy_Equation() || (config[fluidZone]->GetKind_Regime() == ENUM_REGIME::COMPRESSIBLE) 
+          if (config[fluidZone]->GetEnergy_Equation() || (config[fluidZone]->GetKind_Regime() == ENUM_REGIME::COMPRESSIBLE)
               || (config[fluidZone]->GetKind_FluidModel() == ENUM_FLUIDMODEL::FLUID_FLAMELET))
             interface_type = heat_target? CONJUGATE_HEAT_FS : CONJUGATE_HEAT_SF;
           else if (config[fluidZone]->GetWeakly_Coupled_Heat())
