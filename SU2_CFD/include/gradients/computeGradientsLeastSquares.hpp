@@ -211,8 +211,10 @@ void computeGradientsLeastSquares(CSolver* solver,
     const auto coord_i = nodes->GetCoord(iPoint);
 
 #ifndef HAVE_OPDI
+#ifndef ONLY_HYBRID_AD_COMPATIBLE_PREACCS
     /*--- Cannot preaccumulate if hybrid parallel due to shared reading. ---*/
     AD::StartPreacc();
+#endif
 #endif
 
     AD::SetPreaccIn(coord_i, nDim);

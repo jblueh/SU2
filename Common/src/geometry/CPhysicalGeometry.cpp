@@ -7216,8 +7216,10 @@ void CPhysicalGeometry::SetBoundControlVolume(const CConfig* config, unsigned sh
       const auto nNodes = bound[iMarker][iElem]->GetnNodes();
 
 #ifndef HAVE_OPDI
+#ifndef ONLY_HYBRID_AD_COMPATIBLE_PREACCS
       /*--- Cannot preaccumulate if hybrid parallel due to shared reading. ---*/
       AD::StartPreacc();
+#endif
 #endif
 
       /*--- Get pointers to the coordinates of all the element nodes ---*/

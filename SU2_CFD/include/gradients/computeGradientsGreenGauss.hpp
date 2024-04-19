@@ -78,8 +78,10 @@ void computeGradientsGreenGauss(CSolver* solver,
     auto nodes = geometry.nodes;
 
 #ifndef HAVE_OPDI
+#ifndef ONLY_HYBRID_AD_COMPATIBLE_PREACCS
     /*--- Cannot preaccumulate if hybrid parallel due to shared reading. ---*/
     AD::StartPreacc();
+#endif
 #endif
 
     AD::SetPreaccIn(nodes->GetVolume(iPoint));

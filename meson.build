@@ -104,6 +104,12 @@ if get_option('enable-autodiff') and not omp
   endif
 endif
 
+if get_option('enable-autodiff')
+  if get_option('only-hybrid-ad-compatible-preaccs')
+    codi_rev_args += '-DONLY_HYBRID_AD_COMPATIBLE_PREACCS'
+  endif
+endif
+
 # add cgns library
 if get_option('enable-cgns')
   subdir('externals/cgns')
