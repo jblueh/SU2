@@ -77,8 +77,11 @@ void computeGradientsGreenGauss(CSolver* solver,
   {
     auto nodes = geometry.nodes;
 
+#ifndef HAVE_OPDI
     /*--- Cannot preaccumulate if hybrid parallel due to shared reading. ---*/
-    if (omp_get_num_threads() == 1) AD::StartPreacc();
+    AD::StartPreacc();
+#endif
+
     AD::SetPreaccIn(nodes->GetVolume(iPoint));
     AD::SetPreaccIn(nodes->GetPeriodicVolume(iPoint));
 
