@@ -117,7 +117,7 @@ protected:
 
   /*!< \brief Members to use GMRES to drive inner iterations (alternative to quasi-Newton). */
   static constexpr unsigned long KrylovMinIters = 3;
-  const Scalar KrylovTol = 0.01;
+  const Scalar KrylovTol = 1e-30;
   vector<CSysSolve<Scalar> > LinSolver;
   vector<CSysVector<Scalar> > AdjRHS, AdjSol;
 
