@@ -192,8 +192,12 @@ void CSysMatrix<ScalarType>::Initialize(unsigned long npoint, unsigned long npoi
               "per thread.\n";
     }
   }
-  const auto imbalance = max_nnz * omp_num_parts / static_cast<double>(nnz) - 1;
-  cout << "ILU Metis imbalance for rank " << rank << ": " << imbalance << '\n';
+  su2double imbalance = max_nnz * omp_num_parts / static_cast<double>(nnz) - 1;
+  su2double globalMaxImbalance = -20.0;
+  SU2_MPI::Allreduce(&imbalance, &globalMaxImbalance, 1, MPI_DOUBLE, MPI_MAX, SU2_MPI::GetComm());
+  if (rank == MASTER_NODE) {
+    cout << "Maximum ILU Metis imbalance: " << imbalance << '\n';
+  }
 
   /*--- Generate MKL Kernels ---*/
 
